@@ -13,7 +13,7 @@ private:
 		L"1. 15パズル(仮)",
 		L"2. 野球",
 		L"3. 的当て",
-		L"4. インベーダー",
+		L"4. インベーダ",
 		L"5. 射的(仮)",
 	};
 
@@ -26,6 +26,8 @@ public:
 	void update() override
 	{
 		bgm.play();
+
+		bgm.setVolume(0.05);
 		//タイトルへ戻る
 		if (Input::MouseL.clicked)
 		{
@@ -39,7 +41,7 @@ public:
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"PuzzleGame");
+			changeScene(L"PuzzleGame_Menu");
 		}
 
 		//key2を押したら→BaseBall
@@ -47,7 +49,7 @@ public:
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"BaseBall");
+			changeScene(L"BattingGame_Menu");
 		}
 		
 		//key3を押したら→的当て
@@ -55,7 +57,7 @@ public:
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"Shootinggame");
+			changeScene(L"ShootingGame_Menu");
 		}
 
 		//key4押したら→Invader
@@ -63,7 +65,7 @@ public:
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"Invader");
+			changeScene(L"InvaderGame_Menu");
 		}
 
 		//key5を押してら→TargetGame
@@ -71,7 +73,7 @@ public:
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"TargetGame");
+			changeScene(L"TargetGame_Menu");
 		}
 
 	}

@@ -2,7 +2,7 @@
 #include"../../Object/Object.h"
 #include"../../Collision/Collision.h"
 
-class PuzzleGame : public MyApp::Scene
+class Puzzle_Game : public MyApp::Scene
 {
 private:
 	//ŽžŠÔ

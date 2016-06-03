@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"../../Object/Object.h"
 
-class TargetGame : public MyApp::Scene
+class Target_Game : public MyApp::Scene
 {
 private:
 
@@ -77,8 +77,7 @@ public:
 		Rect(70, 0, 30, 500).draw({ 173,140,56 });
 		Rect(500, 0, 30, 500).draw({ 173,140,56 });
 
-		/*RoundRect((Mouse::Pos().x - 20), (Mouse::Pos().y - 20), 40, 40, 10).draw({0,0,0,180});
-		Circle(Mouse::Pos(), 5).draw(Palette::Blue);*/
+		
 		target.resize(40, 40).draw((Mouse::Pos().x - 20), (Mouse::Pos().y - 20));
 	}
 };

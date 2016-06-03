@@ -3,7 +3,7 @@
 
 
 
-class Invader : public MyApp::Scene
+class Invader_Game : public MyApp::Scene
 {
 private:
 

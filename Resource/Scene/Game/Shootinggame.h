@@ -1,8 +1,9 @@
 #pragma once
+#pragma once
 #include"../../Object/Object.h"
 
 
-class Shootinggame : public MyApp::Scene 
+class Shooting_Game : public MyApp::Scene
 {
 private:
 
@@ -19,13 +20,13 @@ public:
 		}
 
 		circle_y += 1;
-		
+
 		if (circle_y < 50)
 		{
 			circle_y *= 1;
 		}
-		
-		
+
+
 	}
 
 	void draw() const override
