@@ -1,6 +1,11 @@
 #pragma once
 #include"../../Object/Object.h"
-#include"../../Collision/Collision.h"
+//#include"../../Collision/Collision.h"
+
+bool Swappable(int32 a, int32 b)
+{
+	return (a / 4 == b / 4 && Abs(a - b) == 1) || (a % 4 == b % 4 && Abs(a - b) == 4);
+}
 
 class Puzzle_Game : public MyApp::Scene
 {

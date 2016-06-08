@@ -5,6 +5,7 @@ class Target_Game : public MyApp::Scene
 {
 private:
 
+	//キャラ
 	const Texture tex1_1{ L"res/texture/シンデレラ_ドレス.png"};
 	const Texture tex1_2{ L"res/texture/シンデレラ1.png" };
 	const Texture tex1_3{ L"res/texture/タマ.png" };
@@ -21,8 +22,10 @@ private:
 	const Texture tex3_4{ L"res/texture/skeletone.png" };
 	const Texture tex3_5{ L"res/texture/ルンバ.png" };
 
-
+	//カーソル
 	const Texture target{ L"res/texture/target.png" };
+
+
 public:
 
 	void update() override
@@ -37,6 +40,7 @@ public:
 	void draw() const override
 	{
 		Window::ClientRect().draw({255,255,255 });
+
 
 		//1-1
 		tex1_1.resize(50,100).draw(130,0);
@@ -73,6 +77,7 @@ public:
 		{
 			Rect(100, (i * 130) + 100, 400, 20).draw({173,140,56});
 		}
+		
 
 		Rect(70, 0, 30, 500).draw({ 173,140,56 });
 		Rect(500, 0, 30, 500).draw({ 173,140,56 });

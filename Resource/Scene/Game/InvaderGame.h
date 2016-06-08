@@ -17,11 +17,9 @@ private:
 
 	Vec2 enemySpeed{ 0,0 };
 	Rect enemy;
+
 	const Texture enemy_tes{ L"res/texture/enemy.jpg" };
-
-	int32 PlayerCount = 0;
-	int32 PlayerShotNum = 0;
-
+	
 public:
 
 	void update() override
@@ -49,12 +47,11 @@ public:
 		}
 
 		//‘Å‚Â
-		if (Input::KeySpace.pressed && count % 4 == 0)
+		if (Input::KeySpace.released && count % 4 == 0)
 		{
 			shots.push_back(player.p0);
 		}
 		
-
 		//‰æ–ÊØ‚è‘Ö‚¦
 		if (Input::KeyControl.pressed)
 		{

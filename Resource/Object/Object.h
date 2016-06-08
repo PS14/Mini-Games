@@ -8,5 +8,7 @@ struct CommonData
 	Font font{ 20 };
 };
 
+
+
 // シーンのキーの型と、共有データの型を指定
 using MyApp = SceneManager<String, CommonData>;

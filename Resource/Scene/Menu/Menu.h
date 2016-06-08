@@ -13,14 +13,13 @@ private:
 		L"1. 15パズル(仮)",
 		L"2. 野球",
 		L"3. 的当て",
-		L"4. インベーダ",
+		L"4. ブロック崩し",
 		L"5. 射的(仮)",
 	};
 
 	const Sound sound{ L"res/Sound/button.mp3" };
 	const Sound bgm{ L"res/Sound/Menu.mp3" };
 
-	const Rect rect{ 300,100,300,300 };
 public:
 
 	void update() override
@@ -60,12 +59,12 @@ public:
 			changeScene(L"ShootingGame_Menu");
 		}
 
-		//key4押したら→Invader
+		//key4押したら→ブロック崩し
 		if (Input::Key4.pressed)
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
-			changeScene(L"InvaderGame_Menu");
+			changeScene(L"BrokenstickGame_Menu");
 		}
 
 		//key5を押してら→TargetGame
@@ -75,6 +74,8 @@ public:
 			++m_data->counter;
 			changeScene(L"TargetGame_Menu");
 		}
+
+	
 
 	}
 
@@ -87,17 +88,20 @@ public:
 		{
 			const Rect rect(60 + p.x * 280, 60 + p.y * 80, 220, 60);
 
+			const bool r = rect.mouseOver;
+
+
 			Graphics2D::SetTransform(Mat3x2::Rotate(Radians(2), rect.pos));
 
 			rect.drawShadow({ 1, 1 }, 12, -1, ColorF(0, 0.4));
 
 			Graphics2D::SetTransform(Mat3x2::Identity());
 
-			rect.draw(HSV((p.x * 5 + p.y) * 30, 0.5, 1.0));
+			rect.draw(r ? Palette::Lightblue : HSV((p.x * 5 + p.y) * 30, 0.5, 1.0));
 
 			font(texts[p.x * 5 + p.y]).draw(rect.pos.movedBy(20, 12), Palette::Black);
 		}
 
-		rect.drawFrame(0, 10, Palette::Firebrick);
+	
 	}
 };

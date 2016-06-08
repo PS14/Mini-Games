@@ -13,6 +13,8 @@ public:
 	{
 		bgm.play();
 
+		bgm.setVolume(0.05);
+
 		if (Input::MouseL.clicked)
 		{
 		
@@ -29,6 +31,8 @@ public:
 	{
 		Window::ClientRect().draw(Palette::Black);
 
-		m_data->font(L"‘€ì•û–@").draw(Window::Center());
+		m_data->font(L"‘€ì•û–@").draw(200, 10, Palette::White);
+
+		m_data->font(L"Click to game start").draw(200, 400, Palette::Yellow);
 	}
 };
