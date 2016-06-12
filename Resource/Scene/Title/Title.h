@@ -20,7 +20,7 @@ public:
 		t_sound.setVolume(0.2);
 	
 		//Enterを押したら→メニューへ
-		if (Input::KeyEnter.pressed)
+		if (Input::MouseL.clicked)
 		{
 			sound.playMulti(0.5);
 			++m_data->counter;
@@ -35,7 +35,7 @@ public:
 		
 		//文字
 		m_data->font(L"THE・MiniGames").draw(150, 50, Palette::Black);
-		m_data->font(L"Enter key　To  Start").draw(200, 300, Palette::Green);
+		m_data->font(L"Click To Start").draw(200, 300, Palette::Green);
 
 	}
 

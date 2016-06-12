@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include"../../Object/Object.h"
+#include"../../Collision/Collision.h"
 #include<ctime>
 
 
@@ -11,7 +12,14 @@ private:
 	//âπ
 	const Sound bgm{ L"res/Sound/Shooting_Game.mp3" };
 
+	Vec2 target_pos{0,0};
+
+	int32 target_size =Random(20,50);
+
+	float warp_time = 60 * 1.5f;
+
 	//â~ä÷åW
+	Vec2 pos{ 0,0 };
 	Vec2 size{0,0};
 	int32 circle_y = 20;
 	bool circle_move = false;
@@ -20,15 +28,11 @@ private:
 	float gravity = -1;
 	float first_speed = 0.0;
 
+	
+
 public:
 
-	void init() override
-	{
-		up_time = 1;
-		circle_move = false;
-		size.x = 0;
-		size.y = 0;
-	}
+	
 
 	void update() override
 	{
@@ -40,7 +44,9 @@ public:
 			changeScene(L"Result");
 		}
 
-		up_time -= 1;
+		up_time -= 1; //â~ÇÃêLÇ—èkÇ›
+
+		warp_time -= 1;
 
 		if (up_time == 0)
 		{
@@ -65,19 +71,32 @@ public:
 			up_time = 1;
 		}
 
+		
+		if (warp_time == 0)
+		{
+			warp_time = 60 * 1.5f;
+			target_pos.x = Random(100, 500);
+			target_pos.y = Random(100, 400);
+			target_size = Random(20, 50);
+		}
+
+		pos.x = Random(pos.x - size.x, pos.x + size.x);
+		pos.y = Random(pos.y - size.y, pos.y + size.y);
 	}
 
 	void draw() const override
 	{
 		Window::ClientRect().draw(Palette::White);
-		//ìI
-		Circle(Window::Width() / 2, Window::Height() / 2, 100).draw(Palette::Red);
-		Circle(Window::Width() / 2, Window::Height() / 2, 70).drawFrame(0, 10, Palette::White);
-		Circle(Window::Width() / 2, Window::Height() / 2, 30).drawFrame(0, 10, Palette::White);
-		Circle(Window::Width() / 2, Window::Height() / 2, 10).draw(Palette::White);
+		
+
+		Circle(target_pos.x, target_pos.y, (target_size + 40)).draw(Palette::Red);
+		Circle(target_pos.x, target_pos.y, (target_size + 20)).draw(Palette::White);
+		Circle(target_pos.x, target_pos.y, (target_size - 10)).draw(Palette::Red);
 
 
 		Circle(Mouse::Pos(),(size.x, size.y)).drawFrame(0, 5, Palette::Blue);
+
+		Circle(pos.x, pos.y, 3).draw(Palette::Yellow);
 
 	}
 };

@@ -66,10 +66,9 @@ public:
 			hit.play();
 			ball_Speed = Vec2((ball.x - player.center.x) / 8, -ball_Speed.y).setLength(speed);
 			score += 1;
-
-			
-
 		}
+
+		
 	}
 
 	void draw() const override
