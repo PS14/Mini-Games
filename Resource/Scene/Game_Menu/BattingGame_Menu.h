@@ -34,7 +34,7 @@ public:
 	{
 		Window::ClientRect().draw(Palette::Black);
 		//画像
-		texture.resize(700, 550).draw(-30, -50, Alpha(50));
+		texture.resize(700, 550).draw(-30, -50, Alpha(60));
 
 		m_data->font(L"操作方法").draw(200, 10, Palette::White);
 		m_data->font(L"space Key で　バットを振る").draw(100, 100, Palette::White);

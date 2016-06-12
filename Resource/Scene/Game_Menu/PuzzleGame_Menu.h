@@ -5,9 +5,10 @@
 class PuzzleGame_Menu : public MyApp::Scene
 {
 private:
+	
+	const Texture texture{ Image( L"res/texture/image (1).png").mosaiced(10, 10) };
 
 	const Sound bgm{ L"res/Sound/game_menu.mp3" };
-	const Texture texture{ L"res/texture/game_sound.mp3" };
 
 public:
 
@@ -27,6 +28,8 @@ public:
 	void draw() const override
 	{
 		Window::ClientRect().draw(Palette::Black);
+
+		texture.draw(Alpha(50));
 
 		m_data->font(L"操作方法").draw(200, 10, Palette::White);
 		m_data->font(L"ドラックで移動").draw(150, 100, Palette::White);

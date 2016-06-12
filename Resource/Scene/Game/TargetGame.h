@@ -25,11 +25,16 @@ private:
 	//カーソル
 	const Texture target{ L"res/texture/target.png" };
 
+	const Sound  bgm{ L"res/Sound/Target_Game.mp3" };
+
 
 public:
 
 	void update() override
 	{
+		bgm.play();
+		bgm.setVolume(0.1);
+
 		if (Input::KeyControl.pressed)
 		{
 			++m_data->counter;

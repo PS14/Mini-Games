@@ -1,11 +1,6 @@
 #pragma once
 #include"../../Object/Object.h"
-//#include"../../Collision/Collision.h"
-
-bool Swappable(int32 a, int32 b)
-{
-	return (a / 4 == b / 4 && Abs(a - b) == 1) || (a % 4 == b % 4 && Abs(a - b) == 4);
-}
+#include"../../Collision/Collision.h"
 
 class Puzzle_Game : public MyApp::Scene
 {
@@ -22,7 +17,7 @@ private:
 	const int32 pieceSize = 100;
 
 	const Texture texture{ L"res/texture/miku.jpg" };
-	const Sound sound{ L"res/Sound/game_sound.mp3" };
+	const Sound bgm{ L"res/Sound/Puzzle_Game.mp3" };
 
 public:
 
@@ -46,9 +41,9 @@ public:
 		//ŽžŠÔSTART
 		stopwatch.start();
 
-		sound.play();
+		bgm.play();
 
-		sound.setVolume(0.1);
+		bgm.setVolume(0.1);
 
 		if (Input::KeyControl.pressed)
 		{

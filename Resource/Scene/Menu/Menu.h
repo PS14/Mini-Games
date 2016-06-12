@@ -1,12 +1,15 @@
 #pragma once
 #include"../../Object/Object.h"
 
+
+
 class Menu : public MyApp::Scene
 {
 private:
 	const int font_size = 18;
 
 	const Font font{ font_size, Typeface::Light };
+
 
 	const Array<String> texts =
 	{

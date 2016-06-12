@@ -5,6 +5,8 @@ class TargetGame_Menu : public MyApp::Scene
 {
 private:
 
+	const Texture texture{ Image(L"res/texture/image (4).png").mosaiced(20, 20)  };
+
 	const Sound bgm{ L"res/Sound/game_menu.mp3" };
 
 public:
@@ -30,8 +32,9 @@ public:
 	{
 		Window::ClientRect().draw(Palette::Black);
 
-		m_data->font(L"‘€ì•û–@").draw(200, 10, Palette::White);
+		texture.draw(Alpha(50));
 
+		m_data->font(L"‘€ì•û–@").draw(200, 10, Palette::White);
 		m_data->font(L"Click to game start").draw(200, 400, Palette::Yellow);
 
 	}

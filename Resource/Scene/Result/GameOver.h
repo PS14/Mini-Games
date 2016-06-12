@@ -5,10 +5,14 @@ class GameOver : public MyApp::Scene
 {
 private:
 
+	const Sound bgm{ L"res/Sound/gameover.mp3" };
+
 public:
 
 	void update() override
 	{
+		bgm.play();
+
 		//リトライ
 		if (Input::KeyR.pressed)
 		{
@@ -28,8 +32,8 @@ public:
 	{
 
 		m_data->font(L"GAME OVER").draw(150, 100, Palette::White);
-		m_data->font(L"Key で リトライ").draw(150, 150, Palette::White);
-		m_data->font(L"Key で タイトル").draw(150, 170, Palette::White);
+		m_data->font(L"Rキー で リトライ").draw(150, 150, Palette::White);
+		m_data->font(L"スペースキー で タイトル").draw(150, 200, Palette::White);
 	}
 
 };

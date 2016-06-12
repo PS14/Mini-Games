@@ -12,6 +12,8 @@ private:
 
 	Array<Particle> particles{ 400 };
 
+	Stopwatch time;
+
 public:
 
 	void init() override
@@ -20,7 +22,7 @@ public:
 		{
 			const Vec3 pos = RandomVec3({ -20,20 }, { -0.2,4 }, { -20,20 });
 
-			particle = Particle(pos, 0.2, ColorF(1.0, 0.6, 0.0));
+			particle = Particle(pos, 0.2, ColorF(0.0,0.8,1.0));
 
 		}
 

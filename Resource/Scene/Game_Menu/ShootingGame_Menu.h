@@ -5,6 +5,8 @@ class ShootingGame_Menu : public MyApp::Scene
 {
 private:
 
+	const Texture texture{ L"res/texture/image (2).png" };
+
 	const Sound bgm{ L"res/Sound/game_menu.mp3" };
 
 public:
@@ -30,6 +32,8 @@ public:
 	void draw() const override
 	{
 		Window::ClientRect().draw(Palette::Black);
+
+		texture.draw(Alpha(50));
 
 		m_data->font(L"‘€ì•û–@").draw(200, 10, Palette::White);
 

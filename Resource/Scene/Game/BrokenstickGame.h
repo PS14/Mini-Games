@@ -1,18 +1,18 @@
 #pragma once
 #include"../../Object/Object.h"
 
-
 class Brokenstick_Game : public MyApp::Scene
 {
 private:
 
-	const Sound  sound{ Wave(0.1s ,[](double t) { return Fraction(t * 440) * 0.5 - 0.25; }) };
-	const Point blockSize{ 40 , 20 };
+//	const Sound  sound{ Wave(0.1s ,[](double t) { return Fraction(t * 440) * 0.5 - 0.25; }) };
+	const Sound sound{ L"res/Sound/explosion.mp3" };
+	const Sound bgm{ L"res/Sound/Brokenstick_Game.mp3" };
+	const Point blockSize{ 30 , 20 };
 	const double speed = 8.0;
 	Rect wall{ 60,10 };
 	Circle ball{ 320,400,8 };
 	Vec2 ballSpeed{ 0,-speed };
-
 	Array<Rect> blocks;
 
 public:
@@ -27,6 +27,9 @@ public:
 
 	void update() override
 	{
+		bgm.play();
+		bgm.setVolume(0.1);
+
 		if (Input::KeyControl.pressed)
 		{
 			++m_data->counter;
@@ -43,7 +46,7 @@ public:
 				(it->bottom.intersects(ball) || it->top.intersects(ball) ? ballSpeed.y : ballSpeed.x) *= -1;
 
 				blocks.erase(it);
-				sound.playMulti();
+				sound.playMulti(0.1);
 
 				break;
 			}
@@ -52,7 +55,6 @@ public:
 		{
 			ballSpeed *= -1;
 		}
-
 
 		if (ball.x < 0 && ballSpeed.x < 0 || (Window::Width() < ball.x && ballSpeed.x > 0))
 		{
@@ -64,12 +66,10 @@ public:
 			ballSpeed = Vec2((ball.x - wall.center.x) / 8, -ballSpeed.y).setLength(speed);
 		}
 
-
 		if (ball.y > 600)
 		{
 			changeScene(L"GameOver");
 		}
-
 
 	}
 
@@ -77,12 +77,9 @@ public:
 	{
 		for (auto const& block : blocks)
 		{
-			block.stretched(-1).draw(HSV(block.y - 40));
+			block.stretched(-3).draw(HSV(block.y - 40));
 		}
-
 		ball.draw();
 		wall.draw();
-
 	}
-
 };
