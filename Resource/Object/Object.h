@@ -20,8 +20,8 @@ const Array<String> texts =
 struct Application
 {
 	String name;
-	
-	String changeScene;
+
+	String description;
 	Texture thumbnail;
 };
 

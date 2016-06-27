@@ -20,7 +20,7 @@ private:
 
 	const Array<Application> applications =
 	{
-		{ L"1. 15パズル"		, L"PuzzleGame_Menu",texture1 },
+		{ L"1. 15パズル"		, L"",texture1 },
 		{ L"2. バッティング"	, L"",texture2 },
 		{ L"3. 的当て"		, L"",texture3 },
 		{ L"4. ブロック崩し" , L"",texture4 },
@@ -46,13 +46,6 @@ public:
 		bgm.play();
 
 		bgm.setVolume(0.05);
-		//タイトルへ戻る
-		/*if (Input::MouseL.clicked)
-		{
-			sound.playMulti(0.5);
-			++m_data->counter;
-			changeScene(L"Title");
-		}*/
 
 		//key1を押したら→PuzzleGameへ
 		if (Input::Key1.pressed)
