@@ -2,6 +2,7 @@
 #include"../../Object/Object.h"
 #include"../../Collision/Collision.h"
 
+
 class Puzzle_Game : public MyApp::Scene
 {
 private:
@@ -18,16 +19,17 @@ private:
 
 	const Texture texture{ L"res/texture/miku.jpg" };
 	const Sound bgm{ L"res/Sound/Puzzle_Game.mp3" };
+	Optional<int32> grabbed;
 
 public:
 
 	void init() override
 	{
 		//ÉâÉìÉ_ÉÄîzíu
-		for (int i = 0; i < 10000; ++i)
+		for (int32 i = 0; i < 10000; ++i)
 		{
-			const int a = Random(0, 15);
-			const int b = a + RandomSelect({ -4, -1, 1, 4 });
+			const int32 a = Random(0, 15);
+			const int32 b = a + RandomSelect({ -4, -1, 1, 4 });
 
 			if (pieces[a] && InRange(b, 0, 15) && !pieces[b] && Swappable(a, b))
 			{
@@ -38,11 +40,12 @@ public:
 
 	void update() override
 	{
+	
+
 		//éûä‘START
 		stopwatch.start();
 
 		bgm.play();
-
 		bgm.setVolume(0.1);
 
 		if (Input::KeyControl.pressed)
@@ -50,6 +53,33 @@ public:
 			++m_data->counter;
 			changeScene(L"Result");
 			stopwatch.reset();
+		}
+
+		//ëÄçÏ
+		if (!Input::MouseL.pressed)
+		{
+			grabbed = none;
+		}
+
+		for (auto i : step(16))
+		{
+			const Rect pieceRect(i % 4 * pieceSize + 50, i / 4 * pieceSize + 50, pieceSize, pieceSize);
+
+			if (!pieces[i])
+			{
+				//ì¸ÇÍë÷Ç¶
+				if (grabbed && pieceRect.mouseOver && Swappable(i, grabbed.value()))
+				{
+					std::swap(pieces[i], pieces[grabbed.value()]);
+					grabbed = none;
+				}
+				continue;
+			}
+
+			if (pieceRect.leftPressed)
+			{
+				grabbed = i;
+			}
 		}
 	}
 
@@ -72,8 +102,6 @@ public:
 				//ì¸ÇÍë÷Ç¶
 				if (grabbed && pieceRect.mouseOver && Swappable(i, grabbed.value()))
 				{
-					//?
-					//std::swap(pieces[i], pieces[grabbed.value()]);
 					grabbed = none;
 				}
 				continue;
