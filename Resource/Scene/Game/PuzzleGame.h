@@ -8,17 +8,20 @@ class Puzzle_Game : public MyApp::Scene
 private:
 	//時間
 	Stopwatch stopwatch;
-
+	//枠
 	const Rect puzzle_rect{ 50, 50, 400, 400 };
 	const Rect finished_rect{ 480, 230, 150, 200 };
-
+	//四角の動的配列
+	//Optional 無効値
 	std::array<Optional<int32>, 16> pieces =
 	{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
 	const int32 pieceSize = 100;
-
+	//画像
 	const Texture texture{ L"res/texture/miku.jpg" };
+	//音
 	const Sound bgm{ L"res/Sound/Puzzle_Game.mp3" };
+	//Optional 無効値
 	Optional<int32> grabbed;
 
 public:
@@ -28,9 +31,10 @@ public:
 		//ランダム配置
 		for (int32 i = 0; i < 10000; ++i)
 		{
+			//ランダム配置
 			const int32 a = Random(0, 15);
 			const int32 b = a + RandomSelect({ -4, -1, 1, 4 });
-
+			//入れ替え判定
 			if (pieces[a] && InRange(b, 0, 15) && !pieces[b] && Swappable(a, b))
 			{
 				std::swap(pieces[a], pieces[b]);
@@ -44,14 +48,16 @@ public:
 
 		//時間START
 		stopwatch.start();
-
+		//音楽再生
 		bgm.play();
+		//音量設定
 		bgm.setVolume(0.1);
 
+		//画面切り替え
 		if (Input::KeyControl.pressed)
 		{
-			++m_data->counter;
 			changeScene(L"Result");
+			//時間Reset
 			stopwatch.reset();
 		}
 
@@ -63,6 +69,7 @@ public:
 
 		for (auto i : step(16))
 		{
+
 			const Rect pieceRect(i % 4 * pieceSize + 50, i / 4 * pieceSize + 50, pieceSize, pieceSize);
 
 			if (!pieces[i])

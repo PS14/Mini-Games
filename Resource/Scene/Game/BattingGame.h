@@ -15,20 +15,23 @@ private:
 	//回転()
 	const double degree = 45;
 	double radian = Radians(degree);
-	//プレイヤー座標
-	double player_x = 270;
-	double player_y = 420;
-
-	const double speed = 2.0;
-
-	const Rect player{ player_x, player_y, 70, 10 };
-	Triangle enemy{ 320,180,30.0 };
-
-	Vec2 ball_Speed{ 0, speed };
+	//プレイヤー
+	const Rect player = Rect{ 270, 420, 70, 10 };
 	
-	Circle ball{ 320,180,10 };
+	//投手
+	Triangle enemy = Triangle{ 320,180,30.0 };
+
+	//ボール
+	Circle ball = Circle{ 320,180,10 };
+
+	const double speed = 8.0;
+
+	//スコア
 	int32 score;
-	int32 count = 0;
+	
+	std::vector<Circle> bullet_vector;
+	bool collided;
+	int32 ball_speed = 3 ;
 
 public:
 
@@ -36,21 +39,11 @@ public:
 	{
 		bgm.play();
 		bgm.setVolume(0.1);
-
-		ball.moveBy(ball_Speed);
-		ball.y += speed;
-
-		++count;
-
-		//if (count % 60 == 0)
-		//{
-		//	ball.y += speed;
-		//}
-
+		
 		//画面切り替え
 		if (Input::KeyControl.pressed)
 		{
-			++m_data->counter;
+			
 			changeScene(L"Result");
 		}
 
@@ -59,16 +52,36 @@ public:
 		{
 			radian -= 0.1;
 		}
-
-		//ballが触れたら
-		if (ball_Speed.y > 0 && player.intersects(ball))
+	
+		collided = false;
+		//ボールが飛ぶ
+		if (Input::MouseL.clicked)
 		{
-			hit.play();
-			ball_Speed = Vec2((ball.x - player.center.x) / 8, -ball_Speed.y).setLength(speed);
-			score += 1;
+			bullet_vector.push_back(ball);
 		}
 
-		
+		//ボールの動き
+		for (auto i = 0; i < bullet_vector.size(); i++)
+		{
+			bullet_vector[i].draw(Palette::Gold);
+
+			if (!collided && bullet_vector[i].intersects(player))
+			{
+				hit.play();
+				collided = true;
+				bullet_vector[i].y += -ball_speed * 100;
+				//score += 1;
+			}
+			else
+			{
+				bullet_vector[i].y += ball_speed;
+			}
+
+			if (bullet_vector[i].y > Window::Height())
+			{
+				bullet_vector.erase(bullet_vector.begin() + i);
+			}
+		}
 	}
 
 	void draw() const override
@@ -79,14 +92,19 @@ public:
 		//画像
 		texture.resize(700, 550).draw(-30, -50);
 
-		ball.draw();
 		//スコア表示
 		m_data->font(L"score : ", score).drawCenter(100, 100);
 		
+		for (auto i = 0; i < bullet_vector.size(); i++)
+		{
+			bullet_vector[i].draw(Palette::White);
+		}
+
 		//投手
 		enemy.draw(Palette::Blue);
 		//プレイヤー(バット)
-		player.rotatedAt(player.pos, radian).draw(Palette::Gray);
+		player.rotatedAt(player.pos, radian).draw(collided ? Palette::Gray : Palette ::Gray);
+
 		
 	}
 
