@@ -1,86 +1,149 @@
 #pragma once
-#pragma once
 #include"../../Object/Object.h"
+
 
 class Batting_Game : public MyApp::Scene
 {
 private:
 	//画像
-	const Texture texture{ L"res/texture/baseballstadium.png" };
-	const Texture ball_texture{ L"res/texture/ball.png" };
+	const Texture texture{ L"Res/Texture/baseballstadium.png" };
+//	const Texture ball_texture{ L"Res/Texture/ball.png" };
 	//音
-	const Sound hit{ L"res/Sound/hit.mp3" };
-	const Sound bgm{ L"res/Sound/Baseball.mp3" };
-	
-	//回転()
-	const double degree = 45;
+	const Sound hit{ L"Res/Sound/hit.mp3" };
+	const Sound bgm{ L"Res/Sound/Baseball.mp3" };
+
+	//回転
+	 double degree = 65;
 	double radian = Radians(degree);
+
 	//プレイヤー
-	const Rect player = Rect{ 270, 420, 70, 10 };
-	
+	Rect player{ 60, 10 };
+
 	//投手
-	Triangle enemy = Triangle{ 320,180,30.0 };
+	Triangle enemy{ 320,180,30.0 };
 
-	//ボール
-	Circle ball = Circle{ 320,180,10 };
-
-	const double speed = 8.0;
+	//球関係
+	Array<Vec2> balls;
+	double speed = 5.0;
+	Vec2 ballspeed{ 0, speed };
 
 	//スコア
 	int32 score;
-	
-	std::vector<Circle> bullet_vector;
+	//フラグ
 	bool collided;
-	int32 ball_speed = 3 ;
+	int32 count = 0;
+
+	//test
+	Circle ball{ 320,170,8 };
+	//経過時間
+	Stopwatch time;
+	
+	enum Change
+	{
+		SCENE_1,
+		SCENE_2,
+		SCENE_3
+	};
+
+	int32  change = SCENE_1;
+
+	enum Hit
+	{
+		SHAKE,
+		RETURN
+	};
+	
+	int32 bat = SHAKE;
 
 public:
 
+	void init() override
+	{
+		for (auto& ballsize : balls)
+		{
+			ballsize.x = 320;
+			ballsize.y = 170;
+		}	
+		player.setCenter(320, 420);
+		count = 1;
+	}
+	
 	void update() override
 	{
 		bgm.play();
 		bgm.setVolume(0.1);
-		
-		//画面切り替え
+	
+		collided = false;
+
+		time.start();
+
 		if (Input::KeyControl.pressed)
 		{
-			
 			changeScene(L"Result");
 		}
 
-		//バットを振る
-		if (Input::KeySpace.pressed)
-		{
-			radian -= 0.1;
-		}
-	
-		collided = false;
-		//ボールが飛ぶ
-		if (Input::MouseL.clicked)
-		{
-			bullet_vector.push_back(ball);
-		}
-
 		//ボールの動き
-		for (auto i = 0; i < bullet_vector.size(); i++)
+		switch (change)
 		{
-			bullet_vector[i].draw(Palette::Gold);
+		case SCENE_1:
 
-			if (!collided && bullet_vector[i].intersects(player))
+			
+			if (time.s() == 3 )
 			{
-				hit.play();
-				collided = true;
-				bullet_vector[i].y += -ball_speed * 100;
-				//score += 1;
+				count--;
+				change = SCENE_2;
 			}
-			else
+			break;
+
+		case SCENE_2:
+			ball.moveBy(ballspeed);
+
+			if ((ball.x < 0 && ballspeed.x < 0) || (Window::Width() < ball.x && ballspeed.x > 0))
 			{
-				bullet_vector[i].y += ball_speed;
+				change = SCENE_3;
 			}
 
-			if (bullet_vector[i].y > Window::Height())
+			if (ballspeed.y > 0 && player.intersects(ball))
 			{
-				bullet_vector.erase(bullet_vector.begin() + i);
+				hit.playMulti(0.1);
+				ballspeed = Vec2((ball.x - player.center.x), -ballspeed.y).setLength(speed);
 			}
+
+			if (ball.y < 0 && ballspeed.y <  0)
+			{
+				change = SCENE_3;
+			}
+			break;
+
+		case SCENE_3:
+
+			if (count == 0)
+			{
+				changeScene(L"Result");
+			}
+		
+			break;
+		}
+
+		switch (bat)
+		{
+		case SHAKE:
+
+			if (Input::MouseL.clicked)
+			{
+				radian -= degree;
+				bat = RETURN;
+			}
+			break;
+
+		case RETURN:
+
+			if (Input::MouseL.released)
+			{
+				radian += degree;
+				bat = SHAKE;
+			}
+			break;
 		}
 	}
 
@@ -93,19 +156,43 @@ public:
 		texture.resize(700, 550).draw(-30, -50);
 
 		//スコア表示
-		m_data->font(L"score : ", score).drawCenter(100, 100);
-		
-		for (auto i = 0; i < bullet_vector.size(); i++)
-		{
-			bullet_vector[i].draw(Palette::White);
-		}
+		//m_data->font(L"score : ", score).draw(10, 10);
+		m_data->font(L"残り球 :", count ).draw(10, 50);
 
+		switch (change)
+		{
+		case SCENE_1:
+
+			if (time.s() == 3)
+			{
+			
+				m_data->font(L"投げた").draw(300, 200, Palette::Yellow);
+			}
+			break;
+
+		case SCENE_2:
+			if (ballspeed.y > 0 && player.intersects(ball))
+			{
+				m_data->font(L"打った！").draw(300, 200, Palette::Yellow);
+				
+			}
+			break;
+
+
+		case SCENE_3:
+			m_data->font(L"ヒット！").draw(300, 200, Palette::Yellow);
+
+			break;
+
+		}
+		ball.draw();
+		
 		//投手
 		enemy.draw(Palette::Blue);
-		//プレイヤー(バット)
-		player.rotatedAt(player.pos, radian).draw(collided ? Palette::Gray : Palette ::Gray);
 
-		
+		//プレイヤー(バット)
+		player.rotatedAt(player.pos, radian).draw(Palette::Gray);
+		//player.draw(Palette::Gray);
 	}
 
 };

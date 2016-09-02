@@ -9,9 +9,9 @@ class Shooting_Game : public MyApp::Scene
 private:
 
 	//‰¹
-	const Sound bgm{ L"res/Sound/Shooting_Game.mp3" };
+	const Sound bgm{ L"Res/Sound/Shooting_Game.mp3" };
 
-	const Sound button{ L"res/Sound/Œˆ’è.mp3" };
+	const Sound button{ L"Res/Sound/Œˆ’è.mp3" };
 
 	Vec2 target_pos{ 0,0 };
 	int32 target_size = Random(20,50);
@@ -59,15 +59,14 @@ public:
 			}
 		}
 
-		if (Input::MouseL.clicked && big_circle)
+		if (Input::MouseL.clicked &&  big_circle)
 		{
-			
 				score += 1;
-			
-				if (score <= 10)
-				{
-					changeScene(L"Result");
-				}
+		}
+
+		if (time.s() == 10)
+		{
+			changeScene(L"Result");
 		}
 
 		if (circle_move)

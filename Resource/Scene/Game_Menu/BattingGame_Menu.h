@@ -5,29 +5,30 @@ class BattingGame_Menu : public MyApp::Scene
 {
 private:
 	//画像
-	const Texture texture{ L"res/texture/baseballstadium.png" };
-
-	const Sound bgm{ L"res/Sound/game_menu.mp3" };
-	const Sound hit{ L"res/Sound/hit.mp3" };
+	const Texture texture{ L"Res/Texture/baseballstadium.png" };
+	
+	//音
+	const Sound bgm{ L"Res/Sound/game_menu.mp3" };
+	const Sound hit{ L"Res/Sound/hit.mp3" };
 
 public:
 
 	void update() override
 	{
 		bgm.play();
-
 		bgm.setVolume(0.05);
 
-		if (Input::KeySpace.pressed)
-		{
-			
+		if (Input::MouseL.clicked)
+		{	
 			hit.play();
 			++m_data->counter;
 			changeScene(L"Batting_Game");
-
 		}
-
-
+		if (Input::KeyBackspace.pressed)
+		{
+			++m_data->counter;
+			changeScene(L"Menu");
+		}
 	}
 
 	void draw() const override
@@ -36,10 +37,8 @@ public:
 		//画像
 		texture.resize(700, 550).draw(-30, -50, Alpha(60));
 
-		m_data->font(L"操作方法").draw(200, 10, Palette::White);
-		m_data->font(L"space Key で　バットを振る").draw(100, 100, Palette::White);
-		m_data->font(L"ゲームルール").draw(200, 200, Palette::White);
-		m_data->font(L"ひたすら打つ").draw(200, 250, Palette::White);
-		m_data->font(L"space　key to game start").draw(200, 400, Palette::Yellow);
+		m_data->font(L"操作方法").draw(200, 10, Palette::Green);
+		m_data->font(L"左クリック で バットを振る").draw(100, 150, Palette::White);
+		m_data->font(L"Click to game start").draw(200, 400, Palette::Yellow);
 	}
 };

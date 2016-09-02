@@ -6,15 +6,17 @@ class Brokenstick_Game : public MyApp::Scene
 private:
 
 	//音楽
-	const Sound sound{ L"res/Sound/explosion.mp3" };
-	const Sound bgm{ L"res/Sound/Brokenstick_Game.mp3" };
-	//ボールの速さ
-	const double speed = 8.0;
+	const Sound sound{ L"Res/Sound/explosion.mp3" };
+	const Sound bgm{ L"Res/Sound/Brokenstick_Game.mp3" };
+
 	const Point blockSize{ 30 , 20 };
 	//四角
 	Rect wall{ 60,10 };
 	//円
 	Circle ball{ 320,400,8 };
+	//ボールの速さ
+	const double speed = 8.0;
+
 	//座標
 	Vec2 ballSpeed{ 0,-speed };
 	//ブロックの動的配列
@@ -25,7 +27,7 @@ public:
 	void init() override
 	{
 		//ブロックの初期化
-
+		//stepクラス
 		for (auto p : step({ Window::Width() / blockSize.x, 5 }))
 		{
 			//コンテナ　push_back → emplace_back
@@ -46,7 +48,7 @@ public:
 			//画面の切り替え
 			changeScene(L"Result");
 		}
-		//
+		//移動
 		ball.moveBy(ballSpeed);
 		//壁を中心に移動する
 		wall.setCenter(Mouse::Pos().x, 420);
@@ -75,7 +77,7 @@ public:
 		{
 			ballSpeed.x *= -1;
 		}
-		//壁に当たったらはね返る
+		//プレイヤーに当たったらはね返る
 		if (ballSpeed.y > 0 && wall.intersects(ball))
 		{
 			ballSpeed = Vec2((ball.x - wall.center.x) / 8, -ballSpeed.y).setLength(speed);
@@ -85,6 +87,7 @@ public:
 		{
 			//画面の切り替え
 			changeScene(L"GameOver");
+			
 		}
 	}
 
@@ -104,5 +107,6 @@ public:
 		//描画
 		ball.draw();
 		wall.draw();
+		
 	}
 };

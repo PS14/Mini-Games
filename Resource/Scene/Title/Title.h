@@ -5,10 +5,20 @@ class Title : public MyApp::Scene
 {
 private:
 	//サウンド
-	const Sound sound{ L"res/Sound/button.mp3" };
-	const Sound t_sound{ L"res/Sound/Title.mp3" };
+	const Sound sound{ L"Res/Sound/button.mp3" };
+	const Sound t_sound{ L"Res/Sound/Title.mp3" };
 
+	//画像
+	const Texture texture_1{L"Res/Texture/crane.png"};
+	const Texture texture_2{L"Res/Texture/puzzle.png"};
 
+	const Font font2{ 30, Typeface::Heavy, FontStyle::Outline };
+
+	const int32 cycle = 1200;
+	
+	 int32 t;
+
+	double a2;
 
 public:
 
@@ -16,7 +26,6 @@ public:
 	{
 		//サウンド再生
 		t_sound.play();
-
 		t_sound.setVolume(0.2);
 	
 		//Enterを押したら→メニューへ
@@ -26,17 +35,30 @@ public:
 			++m_data->counter;
 			changeScene(L"Menu");
 		}
+		
+		t = Time::GetMillisec();
+
+		a2 = Sin(t % cycle / static_cast<double>(cycle) * TwoPi) * 0.3 + 0.7;
+
+
 	}
 
 	void draw() const override
 	{
 		//背景
-		Window::ClientRect().draw(Palette::Lightblue);
+		Window::ClientRect().draw(Palette::White);
 		
-		//文字
-		m_data->font(L"THE・MiniGames").draw(150, 50, Palette::Black);
-		m_data->font(L"Click To Start").draw(200, 300, Palette::Green);
+		RoundRect(180, 300, 250, 50, 40).draw(Palette::Lightblue);
+	
+		//texture_1.resize(50,50).draw(100,200);
+		//texture_2.resize(100,200).draw(300, 200);
 
+		//文字
+		//m_data->font(L"Click To Start").draw(200, 300, Palette::Green);
+		m_data->font(L"Click To Start").draw(200, 300, AlphaF(a2));
+	
+		font2.changeOutlineStyle( TextOutlineStyle(Palette::Green, Palette::Orange, 2.0) );
+		font2(L"THE・MiniGames").draw(150, 50);
 	}
 
 };
