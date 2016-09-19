@@ -6,14 +6,14 @@ class PuzzleGame_Menu : public MyApp::Scene
 {
 private:
 	
-	const Texture texture{ Image( L"Res/Texture/image (1).png").mosaiced(10, 10) };
+	const Texture texture{ Image( L"Resource/Texture/image (1).png").mosaiced(10, 10) };
 
-	const Sound bgm{ L"Res/Sound/game_menu.mp3" };
-	const Sound button{ L"Res/Sound/Œˆ’è.mp3" };
+	const Sound bgm{ L"Resource/Sound/game_menu.mp3" };
+	const Sound button{ L"Resource/Sound/Œˆ’è.mp3" };
 
 public:
 
-	void update() override
+	void update() 
 	{
 		bgm.play();
 

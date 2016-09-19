@@ -5,11 +5,11 @@ class BattingGame_Menu : public MyApp::Scene
 {
 private:
 	//‰æ‘œ
-	const Texture texture{ L"Res/Texture/baseballstadium.png" };
+	const Texture texture{ L"Resource/Texture/baseballstadium.png" };
 	
 	//‰¹
-	const Sound bgm{ L"Res/Sound/game_menu.mp3" };
-	const Sound hit{ L"Res/Sound/hit.mp3" };
+	const Sound bgm{ L"Resource/Sound/game_menu.mp3" };
+	const Sound hit{ L"Resource/Sound/hit.mp3" };
 
 public:
 

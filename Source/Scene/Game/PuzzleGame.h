@@ -18,9 +18,9 @@ private:
 
 	const int32 pieceSize = 100;
 	//画像
-	const Texture texture{ L"Res/Texture/miku.jpg" };
+	const Texture texture{ L"Resource/Texture/miku.jpg" };
 	//音
-	const Sound bgm{ L"Res/Sound/Puzzle_Game.mp3" };
+	const Sound bgm{ L"Resource/Sound/Puzzle_Game.mp3" };
 	//Optional 無効値
 	Optional<int32> grabbed;
 
@@ -31,7 +31,7 @@ private:
 	int32 alpha = 255;
 
 	//テキストに書き込む
-	TextWriter writer{ L"puzzle_score.txt" };
+	TextWriter writer{ L"Resource/Text/puzzle_score.txt" };
 
 public:
 	
@@ -103,7 +103,7 @@ public:
 		//もし揃ったら、クリア画面に移動
 		if (clear)
 		{
-			changeScene(L"GameClear");
+			changeScene(L"Puzzle_Result");
 			//時間Reset
 			stopwatch.pause();
 			
@@ -116,7 +116,7 @@ public:
 		//デバック用
 		if (Input::KeyControl.pressed)
 		{
-			changeScene(L"GameClear");
+			changeScene(L"Puzzle_Result");
 			//時間Reset
 			//stopwatch.reset();
 			stopwatch.pause();

@@ -9,9 +9,9 @@ class Shooting_Game : public MyApp::Scene
 private:
 
 	//‰¹
-	const Sound bgm{ L"Res/Sound/Shooting_Game.mp3" };
+	const Sound bgm{ L"Resource/Sound/Shooting_Game.mp3" };
 
-	const Sound button{ L"Res/Sound/Œˆ’è.mp3" };
+	const Sound button{ L"Resource/Sound/Œˆ’è.mp3" };
 
 	Vec2 target_pos{ 0,0 };
 	int32 target_size = Random(20,50);
@@ -33,6 +33,9 @@ private:
 	const bool middle_circle = hit(target_pos.x, target_pos.y, target_size + 20, pos.x, pos.y);
 	const bool big_circle = hit(target_pos.x, target_pos.y, target_size + 40, pos.x, pos.y);
 
+	//ƒeƒLƒXƒg‚É‘‚«ž‚Þ
+	TextWriter writer{ L"Resource/Text/Shooting_score.txt" };
+
 public:
 
 	void update() override
@@ -44,7 +47,7 @@ public:
 	
 		if (Input::KeyControl.pressed)
 		{
-			changeScene(L"Result");
+			changeScene(L"Shooting_Result");
 		}		
 
 		up_time -= 1; //‰~‚ÌL‚Ñk‚Ý
@@ -66,7 +69,9 @@ public:
 
 		if (time.s() == 10)
 		{
-			changeScene(L"Result");
+			changeScene(L"Shooting_Result");
+			//ƒeƒLƒXƒg‚É‘‚«ž‚Ý
+			writer.writeln(L"‰ñ”", score, L"‰ñ");
 		}
 
 		if (circle_move)
@@ -111,8 +116,8 @@ public:
 
 		Circle(Mouse::Pos()).draw(Palette::Orange);
 	
-		m_data->font(time.s(), L"•b").draw(Window::Center(),Palette::Black);
-		m_data->font(L"score :", score).drawCenter(100, 300,Palette::Black);
+		m_data->font(time.s(), L"•b").draw(10,10,Palette::Black);
+		m_data->font(L"score :", score).drawCenter(50, 50,Palette::Black);
 		
 	}
 };

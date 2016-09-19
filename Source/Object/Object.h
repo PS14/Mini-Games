@@ -14,10 +14,10 @@ struct Application
 {
 	String name;
 	String changeScene;
-
-	//String option;
-	String description;
 	Texture thumbnail;
+	String option;
+	
+
 };
 
 

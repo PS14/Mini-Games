@@ -5,12 +5,12 @@ class Title : public MyApp::Scene
 {
 private:
 	//ƒTƒEƒ“ƒh
-	const Sound sound{ L"Res/Sound/button.mp3" };
-	const Sound t_sound{ L"Res/Sound/Title.mp3" };
+	const Sound sound{ L"Resource/Sound/button.mp3" };
+	const Sound t_sound{ L"Resource/Sound/Title.mp3" };
 
 	//‰æ‘œ
-	const Texture texture_1{L"Res/Texture/crane.png"};
-	const Texture texture_2{L"Res/Texture/puzzle.png"};
+	const Texture texture_1{L"Resource/Texture/crane.png"};
+	const Texture texture_2{L"Resource/Texture/puzzle.png"};
 
 	const Font font2{ 30, Typeface::Heavy, FontStyle::Outline };
 
@@ -50,8 +50,7 @@ public:
 		
 		RoundRect(180, 300, 250, 50, 40).draw(Palette::Lightblue);
 	
-		//texture_1.resize(50,50).draw(100,200);
-		//texture_2.resize(100,200).draw(300, 200);
+	
 
 		//•¶Žš
 		//m_data->font(L"Click To Start").draw(200, 300, Palette::Green);

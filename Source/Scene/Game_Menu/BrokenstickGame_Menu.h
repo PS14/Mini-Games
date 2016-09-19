@@ -6,11 +6,11 @@ class BrokenstickGame_Menu : public MyApp::Scene
 private:
 
 	//‰æ‘œ
-	const Texture texture{ L"Res/Texture/image (3).png" };
+	const Texture texture{ L"Resource/Texture/image (3).png" };
 
 	//‰¹
-	const Sound sound{ L"Res/Sound/explosion.mp3" };
-	const Sound bgm{ L"Res/Sound/game_menu.mp3" };
+	const Sound sound{ L"Resource/Sound/explosion.mp3" };
+	const Sound bgm{ L"Resource/Sound/game_menu.mp3" };
 
 public:
 

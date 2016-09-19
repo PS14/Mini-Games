@@ -6,8 +6,8 @@ class Brokenstick_Game : public MyApp::Scene
 private:
 
 	//音楽
-	const Sound sound{ L"Res/Sound/explosion.mp3" };
-	const Sound bgm{ L"Res/Sound/Brokenstick_Game.mp3" };
+	const Sound sound{ L"Resource/Sound/explosion.mp3" };
+	const Sound bgm{ L"Resource/Sound/Brokenstick_Game.mp3" };
 
 	const Point blockSize{ 30 , 20 };
 	//四角
@@ -21,6 +21,11 @@ private:
 	Vec2 ballSpeed{ 0,-speed };
 	//ブロックの動的配列
 	Array<Rect> blocks;
+	//残り数
+	int32 count = 105;
+
+	//テキストに書き込む
+	TextWriter writer{ L"Resource/Text/block_score.txt" };
 
 public:
 
@@ -46,7 +51,7 @@ public:
 		if (Input::KeyControl.pressed)
 		{
 			//画面の切り替え
-			changeScene(L"Result");
+			changeScene(L"Brokenstick_Result");
 		}
 		//移動
 		ball.moveBy(ballSpeed);
@@ -63,8 +68,15 @@ public:
 				blocks.erase(it);
 				//効果音再生
 				sound.playMulti(0.1);
+				
 
+				count -= 1;
 				break;
+			}
+			//もしブロックがなくなったら終了
+			if (count == 0)
+			{
+				changeScene(L"GameClear");
 			}
 		}
 		//画面の上を超えたらはね返る
@@ -82,13 +94,27 @@ public:
 		{
 			ballSpeed = Vec2((ball.x - wall.center.x) / 8, -ballSpeed.y).setLength(speed);
 		}
+
 		//画面の下を超えたら
 		if (ball.y > 600)
 		{
 			//画面の切り替え
 			changeScene(L"GameOver");
-			
+			//テキストに書き込み
+			writer.writeln(L"残り", count, L"個");
+		
 		}
+		//画面端に行かないようにする
+		if (wall.x < 0 )
+		{
+			wall.setCenter(30, 420);
+		}
+		if (wall.x > Window::Width() - 30)
+		{
+			wall.setCenter(Window::Width() - 30, 420);
+
+		}
+
 	}
 
 	void draw() const override
@@ -100,10 +126,7 @@ public:
 			//HSV色空間(H : 色相　, S : 彩度, V : 明度)
 			block.stretched(-3).draw(HSV(block.y - 40));
 		}
-		if (wall.x < 0 || wall.x > Window::Width())
-		{
-			m_data->font(L"画面外だよ").drawCenter(240, Palette::Yellow);
-		}
+
 		//描画
 		ball.draw();
 		wall.draw();

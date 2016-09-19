@@ -5,10 +5,10 @@ class ShootingGame_Menu : public MyApp::Scene
 {
 private:
 
-	const Texture texture{ L"Res/Texture/image (2).png" };
+	const Texture texture{ L"Resource/Texture/image (2).png" };
 
-	const Sound bgm{ L"Res/Sound/game_menu.mp3" };
-	const Sound button{ L"Res/Sound/Œˆ’è.mp3" };
+	const Sound bgm{ L"Resource/Sound/game_menu.mp3" };
+	const Sound button{ L"Resource/Sound/Œˆ’è.mp3" };
 
 public:
 
